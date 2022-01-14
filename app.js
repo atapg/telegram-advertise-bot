@@ -7,9 +7,14 @@ const {
 	Markup,
 } = require('telegraf')
 
-const { adHandler, addAdvScene } = require('./app/controllers/advertise')
-const { mainKeyboard, advSceneKeyboard } = require('./app/utils/keyboards')
+const { addAdvScene } = require('./app/controllers/advertise')
+const { mainKeyboard } = require('./app/utils/keyboards')
 const { addAdv, returnFromAdvsScene } = require('./app/utils/constants')
+const {
+	enterAdvScene,
+	sendAdv,
+	returnToAdvScene,
+} = require('./app/controllers/actions')
 
 // ----------------------------------------END IMPORTS------------------------------------------
 
@@ -34,7 +39,11 @@ bot.command('/start', ctx => {
 	ctx.reply('Welcome to our bot', mainKeyboard.reply())
 })
 
-bot.hears(addAdv, ctx => ctx.scene.enter('addAdvScene'))
+bot.hears(addAdv, enterAdvScene)
+
+// Actions
+bot.action('nope', returnToAdvScene)
+bot.action('send', sendAdv)
 
 // Launch the BOMB
 bot.launch()
