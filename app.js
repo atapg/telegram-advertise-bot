@@ -18,6 +18,7 @@ const {
 	sendAdv,
 	returnToAdvScene,
 	showPrevAdvs,
+	deleteAdv,
 } = require('./app/controllers/actions')
 const { welcomeText } = require('./app/utils/texts')
 
@@ -53,6 +54,7 @@ bot.hears(manageAdvs, showPrevAdvs)
 // Actions
 bot.action('nope', returnToAdvScene)
 bot.action('send', sendAdv)
+bot.action('delete', deleteAdv)
 
 // Launch the BOMB
 bot.launch().then(() => {
