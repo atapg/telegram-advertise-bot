@@ -9,11 +9,6 @@ const returnToAdvScene = ctx => {
 }
 
 const sendAdv = async ctx => {
-	console.log({
-		advText: ctx.session.text,
-		advUsername: ctx.session.username,
-	})
-
 	await ctx.deleteMessage()
 
 	// TODO uncomment these area later
@@ -66,7 +61,7 @@ const sendAdv = async ctx => {
 	)
 
 	createdAdv.message_id = result.message_id
-	createdAdv.save(err => {
+	await createdAdv.save(err => {
 		if (err) {
 			return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید')
 		}
