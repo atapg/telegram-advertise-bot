@@ -25,16 +25,19 @@ const sendAdv = async ctx => {
 		telegram_id: ctx.update.callback_query.from.id,
 	}).sort('-date')
 
-	const lastAdv = allAdvs[allAdvs.length - 1]
+	if (allAdvs.length > 0) {
+		const lastAdv = allAdvs[allAdvs.length - 1]
 
-	const time = new Date().getTime() - new Date(lastAdv.date).getTime()
-	const minBefore = Math.floor(time / 60000)
+		const time = new Date().getTime() - new Date(lastAdv.date).getTime()
+		const minBefore = Math.floor(time / 60000)
 
-	// Last adv created less than 6 hours
-	if (minBefore < 360) {
-		return ctx.reply(
-			'آخرین آگهی شما کمتر از 6 ساعت پیش ثبت شده است. جهت ارسال آگهی مجدد لطفا آخرین آگهی خود را حذف کنید.',
-		)
+		// TODO change time if u want
+		// Last adv created less than 6 hours
+		if (minBefore < 360) {
+			return ctx.reply(
+				'آخرین آگهی شما کمتر از 6 ساعت پیش ثبت شده است. جهت ارسال آگهی مجدد لطفا آخرین آگهی خود را حذف کنید.',
+			)
+		}
 	}
 	// These area
 
