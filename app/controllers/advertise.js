@@ -32,20 +32,27 @@ const usernameHandler = Telegraf.on('text', async ctx => {
 	) {
 		ctx.reply('نام کاربری وارد شده مجاز نمیباشد ❌')
 	} else {
-		await ctx.telegram.sendMessage(
-			ctx.chat.id,
-			'آیا برای درج این آگهی مطمئن هستید؟',
-			{
-				reply_markup: {
-					inline_keyboard: [
-						[
-							{ text: 'بله ✅', callback_data: 'send' },
-							{ text: 'خیر ❌', callback_data: 'nope' },
-						],
+		const channelAdv = `
+			🔸 ${ctx.session.text}
+			
+			
+			📞 ${ctx.session.username}
+			-------------------------
+			🔰 ${process.env.CHANNEL_URL}
+			-------------------------
+			
+			🔴 آیا جهت درج این آگهی مطمئن هستید؟ 🔴
+		`
+		await ctx.telegram.sendMessage(ctx.chat.id, channelAdv, {
+			reply_markup: {
+				inline_keyboard: [
+					[
+						{ text: 'بله ✅', callback_data: 'send' },
+						{ text: 'خیر ❌', callback_data: 'nope' },
 					],
-				},
+				],
 			},
-		)
+		})
 
 		return ctx.scene.leave()
 	}

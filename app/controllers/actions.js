@@ -44,15 +44,11 @@ const sendAdv = async ctx => {
 	// Then send it to the channel
 
 	// Create adv in db
-	const createdAdv = await Advertisement.create({
+	const createdAdv = new Advertisement({
 		text: ctx.session.text,
 		username: ctx.session.username,
 		telegram_id: ctx.update.callback_query.from.id,
 	})
-
-	if (!createdAdv) {
-		return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید')
-	}
 
 	const channelAdv = `
 		🔸 ${createdAdv.text}
@@ -64,12 +60,19 @@ const sendAdv = async ctx => {
 	`
 
 	// Send message to channel
-	await ctx.telegram.sendMessage(process.env.CHANNEL_ID, channelAdv)
+	const result = await ctx.telegram.sendMessage(
+		process.env.CHANNEL_ID,
+		channelAdv,
+	)
+
+	createdAdv.message_id = result.message_id
+	createdAdv.save(err => {
+		if (err) {
+			return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید')
+		}
+	})
 
 	ctx.reply('آگهی با موفقیت ثبت شد ✅')
-
-	// Send adv to the channel
-	console.log('send')
 }
 
 const showPrevAdvs = async ctx => {
@@ -114,8 +117,6 @@ const deleteAdv = async ctx => {
 	// delete from db
 	const deletableAdv = await Advertisement.findByIdAndDelete(id)
 
-	// TODO Delete same message from channel
-
 	if (!deletableAdv) {
 		return ctx.reply('مشکلی بوجود آمده است ❌')
 	}
@@ -124,6 +125,12 @@ const deleteAdv = async ctx => {
 	await ctx.telegram.deleteMessage(
 		ctx.update.callback_query.message.chat.id,
 		ctx.update.callback_query.message.message_id,
+	)
+
+	// delete adv from channel
+	await ctx.telegram.deleteMessage(
+		process.env.CHANNEL_ID,
+		deletableAdv.message_id,
 	)
 
 	// delete loading message

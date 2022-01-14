@@ -13,6 +13,10 @@ const advSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	message_id: {
+		type: Number,
+		required: true,
+	},
 	date: {
 		type: Date,
 		default: new Date(),
