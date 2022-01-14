@@ -8,14 +8,21 @@ const {
 
 const { addAdvScene } = require('./app/controllers/advertise')
 const { mainKeyboard } = require('./app/utils/keyboards')
-const { addAdv, returnFromAdvsScene } = require('./app/utils/constants')
+const {
+	addAdv,
+	returnFromAdvsScene,
+	manageAdvs,
+} = require('./app/utils/constants')
 const {
 	enterAdvScene,
 	sendAdv,
 	returnToAdvScene,
+	showPrevAdvs,
 } = require('./app/controllers/actions')
 const { welcomeText } = require('./app/utils/texts')
 
+// Call mongodb
+require('./app/config/mongodb.js')
 //----------------------------------------END IMPORTS------------------------------------------
 
 // Defining stage here...
@@ -39,7 +46,9 @@ bot.command('/start', async ctx => {
 	await ctx.replyWithHTML(welcomeText, mainKeyboard.reply())
 })
 
+// listen for actions
 bot.hears(addAdv, enterAdvScene)
+bot.hears(manageAdvs, showPrevAdvs)
 
 // Actions
 bot.action('nope', returnToAdvScene)

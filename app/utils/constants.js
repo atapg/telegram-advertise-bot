@@ -1,5 +1,5 @@
 const addAdv = 'ثبت آگهی 📝'
-const manageAdvs = 'مدیریت آگهی ها 📰'
+const manageAdvs = 'آگهی های من 📰'
 const returnFromAdvsScene = 'بازگشت ⬅️'
 
 module.exports = {
