@@ -31,7 +31,7 @@ const stage = new Stage([addAdvScene])
 
 // Exiting the stage with button maybe return button
 stage.hears(returnFromAdvsScene, ctx => {
-	ctx.reply(`به منو بازگشتید`, mainKeyboard.reply())
+	ctx.reply(`به منو بازگشتید ⬅️`, mainKeyboard.reply())
 	return ctx.scene.leave()
 })
 

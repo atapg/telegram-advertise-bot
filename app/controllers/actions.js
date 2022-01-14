@@ -14,15 +14,13 @@ const sendAdv = async ctx => {
 		advUsername: ctx.session.username,
 	})
 
-	// filterText(ctx.session.text)
-
 	await ctx.deleteMessage()
 
 	// TODO commend these area later
 	// Check if user had sent a message in previous 12 hours
 	// Each user should be able to send adv every 12 hours (2per day)
 	// const allAdvs = await Advertisement.find({
-	// 	telegram_id: ctx.update.callback_query.from.id,
+	// telegram_id: ctx.update.callback_query.from.id,
 	// }).sort('-date')
 	//
 	// if (allAdvs.length > 0) {
@@ -95,10 +93,11 @@ const deleteAdv = async ctx => {
 	const loadingMessage = await ctx.reply('❌ در حال حذف کردن...')
 
 	// delete from db
-	console.log(ctx.update.callback_query.message.text)
 	const deletableAdv = await Advertisement.findOneAndDelete({
 		text: ctx.update.callback_query.message.text,
 	})
+
+	// TODO Delete same message from channel
 
 	if (!deletableAdv) {
 		return ctx.reply('مشکلی بوجود آمده است ❌')

@@ -13,31 +13,39 @@ const {
 const advTextHandler = Telegraf.on('text', async ctx => {
 	ctx.scene.state.text = ctx.message.text
 
-	await ctx.replyWithHTML(addUsernameText)
+	// TODO Check text is valid and has no bad words
+	if (false) {
+	} else {
+		await ctx.replyWithHTML(addUsernameText)
 
-	return ctx.wizard.next()
+		return ctx.wizard.next()
+	}
 })
 
 const usernameHandler = Telegraf.on('text', async ctx => {
 	ctx.session.text = ctx.scene.state.text
 	ctx.session.username = ctx.message.text
 
-	await ctx.telegram.sendMessage(
-		ctx.chat.id,
-		'آیا برای درج این آگهی مطمئن هستید؟',
-		{
-			reply_markup: {
-				inline_keyboard: [
-					[
-						{ text: 'بله ✅', callback_data: 'send' },
-						{ text: 'خیر ❌', callback_data: 'nope' },
+	if (ctx.session.username.length <= 5) {
+		ctx.reply('نام کاربری وارد شده مجاز نمیباشد ❌')
+	} else {
+		await ctx.telegram.sendMessage(
+			ctx.chat.id,
+			'آیا برای درج این آگهی مطمئن هستید؟',
+			{
+				reply_markup: {
+					inline_keyboard: [
+						[
+							{ text: 'بله ✅', callback_data: 'send' },
+							{ text: 'خیر ❌', callback_data: 'nope' },
+						],
 					],
-				],
+				},
 			},
-		},
-	)
+		)
 
-	return ctx.scene.leave()
+		return ctx.scene.leave()
+	}
 })
 
 // ----------------------------------------------------------------------------------
