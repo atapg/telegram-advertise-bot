@@ -73,7 +73,7 @@ const showPrevAdvs = async ctx => {
 		for (let i = 0; i < length; i++) {
 			const advText = `
 				🗒 نوشته آگهی:  ${allAdvs[i].text}
-				👤 آی دی:  ${allAdvs[i].username}
+				👤 تماس:  ${allAdvs[i].username}
 				📅 تاریخ:  ${new Date(allAdvs[i].date).toLocaleDateString('fa-IR')}
 			`
 

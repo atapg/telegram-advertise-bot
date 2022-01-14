@@ -26,7 +26,10 @@ const usernameHandler = Telegraf.on('text', async ctx => {
 	ctx.session.text = ctx.scene.state.text
 	ctx.session.username = ctx.message.text
 
-	if (ctx.session.username.length <= 5) {
+	if (
+		ctx.session.username.startsWith('@') &&
+		ctx.session.username.length <= 5
+	) {
 		ctx.reply('نام کاربری وارد شده مجاز نمیباشد ❌')
 	} else {
 		await ctx.telegram.sendMessage(

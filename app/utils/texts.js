@@ -12,7 +12,7 @@ const exampleAdvText = `
 `
 
 const addUsernameText = `
-	<b>لطفا آی دی جهت درج در آگهی را وارد نمایید</b>
+	<b>لطفا آی دی یا شماره تلفن جهت درج در آگهی را وارد نمایید</b>
 `
 
 module.exports = {
