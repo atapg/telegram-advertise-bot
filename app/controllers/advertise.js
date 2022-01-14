@@ -11,7 +11,7 @@ const {
 } = require('../utils/texts')
 
 const advTextHandler = Telegraf.on('text', async ctx => {
-	ctx.scene.state.name = ctx.message.text
+	ctx.scene.state.text = ctx.message.text
 
 	// await ctx.telegram.sendMessage(ctx.chat.id, 'Are you sure??', {
 	// 	reply_markup: {
@@ -25,7 +25,8 @@ const advTextHandler = Telegraf.on('text', async ctx => {
 })
 
 const usernameHandler = Telegraf.on('text', async ctx => {
-	ctx.scene.state.name = ctx.message.text
+	ctx.session.text = ctx.scene.state.text
+	ctx.session.username = ctx.message.text
 
 	await ctx.telegram.sendMessage(
 		ctx.chat.id,
