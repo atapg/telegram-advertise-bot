@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const express = require('express')
 const {
 	Telegraf,
 	session,
@@ -12,6 +12,7 @@ const {
 	addAdv,
 	returnFromAdvsScene,
 	manageAdvs,
+	botName,
 } = require('./app/utils/constants')
 const {
 	enterAdvScene,
@@ -21,6 +22,8 @@ const {
 	deleteAdv,
 } = require('./app/controllers/actions')
 const { welcomeText } = require('./app/utils/texts')
+
+const expressApp = express()
 
 // Call mongodb
 require('./app/config/mongodb.js')
@@ -36,7 +39,15 @@ stage.hears(returnFromAdvsScene, ctx => {
 })
 
 // Bot itself
-const bot = new Telegraf(process.env.TOKEN)
+const TOKEN = process.env.TOKEN
+const bot = new Telegraf(TOKEN)
+
+const PORT = process.env.PORT || 3000
+const URL = process.env.URL || 'https://your-heroku-app.herokuapp.com'
+
+bot.telegram.setWebhook(`${URL}/bot${TOKEN}`)
+expressApp.use(bot.webhookCallback(`/bot${TOKEN}`))
+
 // Bot itself
 
 // Middlewares
@@ -57,6 +68,10 @@ bot.action('send', sendAdv)
 bot.action('delete', deleteAdv)
 
 // Launch the BOMB
-bot.launch().then(() => {
-	console.log('BOT LAUNCHED')
+expressApp.get('/', (req, res) => {
+	res.send(`This is ${botName} API Server`)
+})
+
+expressApp.listen(PORT, () => {
+	console.log(`BOT LAUNCHED on port ${PORT}`)
 })
