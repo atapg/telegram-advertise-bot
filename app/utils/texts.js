@@ -1,3 +1,7 @@
+const welcomeText = `
+	<b>به بات آگهی خوش آمدید</b>
+`
+
 const addAdvText = `
     <b>لطفا متن آگهی خود را وارد کنید</b>
     <strong>از به کار بردن الفاظ زشت پرهیز کنید</strong>
@@ -15,4 +19,5 @@ module.exports = {
 	addAdvText,
 	exampleAdvText,
 	addUsernameText,
+	welcomeText,
 }

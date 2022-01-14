@@ -15,6 +15,7 @@ const {
 	sendAdv,
 	returnToAdvScene,
 } = require('./app/controllers/actions')
+const { welcomeText } = require('./app/utils/texts')
 
 // ----------------------------------------END IMPORTS------------------------------------------
 
@@ -36,7 +37,7 @@ bot.use(session(), stage.middleware())
 
 // Commands
 bot.command('/start', ctx => {
-	ctx.reply('Welcome to our bot', mainKeyboard.reply())
+	ctx.replyWithHTML(welcomeText, mainKeyboard.reply())
 })
 
 bot.hears(addAdv, enterAdvScene)
