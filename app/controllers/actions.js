@@ -16,7 +16,7 @@ const sendAdv = async ctx => {
 
 	await ctx.deleteMessage()
 
-	// TODO commend these area later
+	// TODO uncomment these area later
 	// Check if user had sent a message in previous 12 hours
 	// Each user should be able to send adv every 12 hours (2per day)
 	// const allAdvs = await Advertisement.find({
@@ -44,15 +44,27 @@ const sendAdv = async ctx => {
 	// Then send it to the channel
 
 	// Create adv in db
-	const createAdv = await Advertisement.create({
+	const createdAdv = await Advertisement.create({
 		text: ctx.session.text,
 		username: ctx.session.username,
 		telegram_id: ctx.update.callback_query.from.id,
 	})
 
-	if (!createAdv) {
+	if (!createdAdv) {
 		return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید')
 	}
+
+	const channelAdv = `
+		🔸 ${createdAdv.text}
+		
+		
+		📞 ${createdAdv.username}
+		-------------------------
+		🔰 ${process.env.CHANNEL_URL}
+	`
+
+	// Send message to channel
+	await ctx.telegram.sendMessage(process.env.CHANNEL_ID, channelAdv)
 
 	ctx.reply('آگهی با موفقیت ثبت شد ✅')
 
@@ -73,13 +85,19 @@ const showPrevAdvs = async ctx => {
 		for (let i = 0; i < length; i++) {
 			const advText = `
 				🗒 نوشته آگهی:  ${allAdvs[i].text}
-				👤 تماس:  ${allAdvs[i].username}
+				👤 تماس:${allAdvs[i].username}
 				📅 تاریخ:  ${new Date(allAdvs[i].date).toLocaleDateString('fa-IR')}
 			`
-
 			await ctx.telegram.sendMessage(ctx.message.chat.id, advText, {
 				reply_markup: {
-					inline_keyboard: [[{ text: 'حذف آگهی ❌', callback_data: 'delete' }]],
+					inline_keyboard: [
+						[
+							{
+								text: 'حذف آگهی ❌',
+								callback_data: `delete_${allAdvs[i]._id.toString()}`,
+							},
+						],
+					],
 				},
 			})
 		}
@@ -90,12 +108,11 @@ const showPrevAdvs = async ctx => {
 }
 
 const deleteAdv = async ctx => {
+	const id = ctx.match.input.substring(7)
 	const loadingMessage = await ctx.reply('❌ در حال حذف کردن...')
 
 	// delete from db
-	const deletableAdv = await Advertisement.findOneAndDelete({
-		text: ctx.update.callback_query.message.text,
-	})
+	const deletableAdv = await Advertisement.findByIdAndDelete(id)
 
 	// TODO Delete same message from channel
 

@@ -40,13 +40,14 @@ stage.hears(returnFromAdvsScene, ctx => {
 
 // Bot itself
 const TOKEN = process.env.TOKEN
+const PORT = process.env.PORT || 3000
+const URL = process.env.URL || 'https://telegram-advertise-bot.herokuapp.com'
+
 const bot = new Telegraf(TOKEN)
 
-const PORT = process.env.PORT || 3000
-const URL = process.env.URL || 'https://your-heroku-app.herokuapp.com'
-
-bot.telegram.setWebhook(`${URL}/bot${TOKEN}`)
-expressApp.use(bot.webhookCallback(`/bot${TOKEN}`))
+// TODO comment on develop
+// bot.telegram.setWebhook(`${URL}/bot${TOKEN}`)
+// expressApp.use(bot.webhookCallback(`/bot${TOKEN}`))
 
 // Bot itself
 
@@ -65,13 +66,19 @@ bot.hears(manageAdvs, showPrevAdvs)
 // Actions
 bot.action('nope', returnToAdvScene)
 bot.action('send', sendAdv)
-bot.action('delete', deleteAdv)
+bot.action(/delete_+/, deleteAdv)
 
 // Launch the BOMB
-expressApp.get('/', (req, res) => {
-	res.send(`This is ${botName} API Server`)
-})
+// TODO comment on develop
+// expressApp.get('/', (req, res) => {
+// 	res.send(`This is ${botName} API Server`)
+// })
+//
+// expressApp.listen(PORT, () => {
+// 	console.log(`BOT LAUNCHED on port ${PORT}`)
+// })
 
-expressApp.listen(PORT, () => {
-	console.log(`BOT LAUNCHED on port ${PORT}`)
+// TODO enable on develop
+bot.launch().then(() => {
+	console.log('BOT LAUNCHED')
 })
