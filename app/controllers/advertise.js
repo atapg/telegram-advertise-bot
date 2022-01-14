@@ -1,6 +1,6 @@
 const {
 	Telegraf,
-	Scenes: { WizardScene, Stage },
+	Scenes: { WizardScene },
 } = require('telegraf')
 
 const { advSceneKeyboard } = require('../utils/keyboards')
@@ -12,12 +12,6 @@ const {
 
 const advTextHandler = Telegraf.on('text', async ctx => {
 	ctx.scene.state.text = ctx.message.text
-
-	// await ctx.telegram.sendMessage(ctx.chat.id, 'Are you sure??', {
-	// 	reply_markup: {
-	// 		inline_keyboard: [[{ text: 'Send the ad', callback_data: 'send' }]],
-	// 	},
-	// })
 
 	ctx.replyWithHTML(addUsernameText)
 

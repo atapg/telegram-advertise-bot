@@ -3,8 +3,7 @@ require('dotenv').config()
 const {
 	Telegraf,
 	session,
-	Scenes: { WizardScene, Stage },
-	Markup,
+	Scenes: { Stage },
 } = require('telegraf')
 
 const { addAdvScene } = require('./app/controllers/advertise')
@@ -17,7 +16,7 @@ const {
 } = require('./app/controllers/actions')
 const { welcomeText } = require('./app/utils/texts')
 
-// ----------------------------------------END IMPORTS------------------------------------------
+//----------------------------------------END IMPORTS------------------------------------------
 
 // Defining stage here...
 const stage = new Stage([addAdvScene])
@@ -36,8 +35,8 @@ const bot = new Telegraf(process.env.TOKEN)
 bot.use(session(), stage.middleware())
 
 // Commands
-bot.command('/start', ctx => {
-	ctx.replyWithHTML(welcomeText, mainKeyboard.reply())
+bot.command('/start', async ctx => {
+	await ctx.replyWithHTML(welcomeText, mainKeyboard.reply())
 })
 
 bot.hears(addAdv, enterAdvScene)
@@ -47,4 +46,6 @@ bot.action('nope', returnToAdvScene)
 bot.action('send', sendAdv)
 
 // Launch the BOMB
-bot.launch()
+bot.launch().then(() => {
+	console.log('BOT LAUNCHED')
+})
