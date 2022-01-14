@@ -46,8 +46,8 @@ const URL = process.env.URL || 'https://telegram-advertise-bot.herokuapp.com'
 const bot = new Telegraf(TOKEN)
 
 // TODO comment on develop
-// bot.telegram.setWebhook(`${URL}/bot${TOKEN}`)
-// expressApp.use(bot.webhookCallback(`/bot${TOKEN}`))
+bot.telegram.setWebhook(`${URL}/bot${TOKEN}`)
+expressApp.use(bot.webhookCallback(`/bot${TOKEN}`))
 
 // Bot itself
 
@@ -70,15 +70,15 @@ bot.action(/delete_+/, deleteAdv)
 
 // Launch the BOMB
 // TODO comment on develop
-// expressApp.get('/', (req, res) => {
-// 	res.send(`This is ${botName} API Server`)
-// })
-//
-// expressApp.listen(PORT, () => {
-// 	console.log(`BOT LAUNCHED on port ${PORT}`)
-// })
+expressApp.get('/', (req, res) => {
+	res.send(`This is ${botName} API Server`)
+})
+
+expressApp.listen(PORT, () => {
+	console.log(`BOT LAUNCHED on port ${PORT}`)
+})
 
 // TODO enable on develop
-bot.launch().then(() => {
-	console.log('BOT LAUNCHED')
-})
+// bot.launch().then(() => {
+// 	console.log('BOT LAUNCHED')
+// })
