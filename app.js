@@ -24,7 +24,7 @@ const { welcomeText } = require('./app/utils/texts')
 
 // Call mongodb
 require('./app/config/mongodb.js')
-//----------------------------------------END IMPORTS------------------------------------------
+//-----------------------------------------END IMPORTS------------------------------------------
 
 // Defining stage here...
 const stage = new Stage([addAdvScene])
