@@ -96,5 +96,5 @@ expressApp.listen(PORT, () => {
 
 // TODO enable on develop
 // bot.launch().then(() => {
-// 	console.log('BOT LAUNCHED')
+// 	console.log('DEV BOT LAUNCHED')
 // })
