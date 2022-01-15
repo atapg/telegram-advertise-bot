@@ -220,7 +220,7 @@ const presentAdv = async ctx => {
 				return ctx.reply('آگهی با موفقیت به حالت واگذار شده تغییر یافت ✅')
 			})
 			.catch(() => {
-				return ctx.reply('مشکلی بوجود آمده است ❌')
+				return ctx.reply('مشکلی بوجود آمده است و یا آگهی حذف شده است ❌')
 			})
 	})
 

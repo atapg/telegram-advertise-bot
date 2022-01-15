@@ -18,6 +18,18 @@ const isUserChannelMember = async (ctx, next) => {
 		.catch(() => {
 			// user not found
 			return ctx.reply(youMustSubscribe)
+			// return ctx.telegram.sendMessage(chat, youMustSubscribe, {
+			// 	reply_markup: {
+			// 		inline_keyboard: [
+			// 			[
+			// 				{
+			// 					text: 'بله ✅',
+			// 					url: `http://t.me/${process.env.CHANNEL_URLNOAT}`,
+			// 				},
+			// 			],
+			// 		],
+			// 	},
+			// })
 		})
 }
 
