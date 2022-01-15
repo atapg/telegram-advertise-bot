@@ -50,9 +50,17 @@ const addUsernameText = `
 	<b>لطفا آی دی یا شماره تلفن جهت درج در آگهی را وارد نمایید</b>
 `
 
+const youMustSubscribe = `
+🔴 جهت استفاده از خدمات بات باید در کانال عضو باشید 🔴
+
+🔰 آدرس کانال:
+ ${channelId}
+`
+
 module.exports = {
 	addAdvText,
 	exampleAdvText,
 	addUsernameText,
 	welcomeText,
+	youMustSubscribe,
 }

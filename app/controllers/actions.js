@@ -173,6 +173,11 @@ const showLastAdv = async ctx => {
 	})
 }
 
+const presentAdv = ctx => {
+	const id = ctx.match.input.substring(8)
+	console.log(id)
+}
+
 module.exports = {
 	enterAdvScene,
 	sendAdv,
@@ -180,4 +185,5 @@ module.exports = {
 	showPrevAdvs,
 	deleteAdv,
 	showLastAdv,
+	presentAdv,
 }

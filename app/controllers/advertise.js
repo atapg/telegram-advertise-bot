@@ -9,6 +9,7 @@ const {
 	exampleAdvText,
 	addUsernameText,
 } = require('../utils/texts')
+const { isUserChannelMember } = require('../middlewares/channelMember')
 
 const advTextHandler = Telegraf.on('text', async ctx => {
 	ctx.scene.state.text = ctx.message.text
