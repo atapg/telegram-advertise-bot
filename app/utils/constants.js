@@ -2,8 +2,9 @@ const botName = 'بات آگهی تستی'
 const botId = '@test_kelt_bot'
 const channelId = '@test_kelt'
 const addAdv = 'ثبت آگهی 📝'
-const manageAdvs = 'آگهی های من 📰'
+const manageAdvs = 'تمام آگهی های من 🗄'
 const returnFromAdvsScene = 'بازگشت ⬅️'
+const lastAdv = 'آخرین آگهی من 📋'
 
 module.exports = {
 	addAdv,
@@ -12,4 +13,5 @@ module.exports = {
 	botId,
 	botName,
 	channelId,
+	lastAdv,
 }

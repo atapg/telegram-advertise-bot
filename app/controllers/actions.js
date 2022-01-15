@@ -137,10 +137,47 @@ const deleteAdv = async ctx => {
 	return ctx.reply('آگهی با موفقیت حذف شد ✅')
 }
 
+const showLastAdv = async ctx => {
+	const id = ctx.update.message.from.id
+
+	const lastAdv = await Advertisement.findOne(
+		{
+			telegram_id: id,
+		},
+		{},
+		{ sort: '-date' },
+	)
+
+	if (!lastAdv) {
+		return ctx.reply(
+			'مشکلی بوجود آمده است و یا هیچ آگهی به نام شما وجود ندارد ❌',
+		)
+	}
+
+	const advText = `
+			🗒 نوشته آگهی:  ${lastAdv.text}
+			👤 تماس:${lastAdv.username}
+			📅 تاریخ:  ${new Date(lastAdv.date).toLocaleDateString('fa-IR')}
+		`
+	await ctx.telegram.sendMessage(ctx.message.chat.id, advText, {
+		reply_markup: {
+			inline_keyboard: [
+				[
+					{
+						text: 'حذف آگهی ❌',
+						callback_data: `delete_${lastAdv._id.toString()}`,
+					},
+				],
+			],
+		},
+	})
+}
+
 module.exports = {
 	enterAdvScene,
 	sendAdv,
 	returnToAdvScene,
 	showPrevAdvs,
 	deleteAdv,
+	showLastAdv,
 }

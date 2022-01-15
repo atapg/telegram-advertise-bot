@@ -1,9 +1,15 @@
 //https://github.com/RealPeha/telegram-keyboard
 const { Keyboard } = require('telegram-keyboard')
-const { addAdv, manageAdvs, returnFromAdvsScene } = require('./constants')
+const {
+	addAdv,
+	manageAdvs,
+	returnFromAdvsScene,
+	lastAdv,
+} = require('./constants')
 
 const mainKeyboard = Keyboard.make([
-	[manageAdvs, addAdv], // First row
+	[lastAdv, addAdv], // First row
+	[manageAdvs],
 ])
 
 advSceneKeyboard = Keyboard.make([[returnFromAdvsScene]])
