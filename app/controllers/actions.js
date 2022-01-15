@@ -67,7 +67,9 @@ const sendAdv = async ctx => {
 		}
 	})
 
-	ctx.reply('آگهی با موفقیت ثبت شد ✅')
+	ctx.reply(
+		'آگهی با موفقیت ثبت شد ✅ \n درصورتی که قوانین را رعایت نکرده باشید آگهی از کانال حذف خواهد شد',
+	)
 }
 
 const showPrevAdvs = async ctx => {

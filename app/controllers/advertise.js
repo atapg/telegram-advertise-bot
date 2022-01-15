@@ -9,11 +9,10 @@ const {
 	exampleAdvText,
 	addUsernameText,
 } = require('../utils/texts')
-const { isUserChannelMember } = require('../middlewares/channelMember')
 
 const advTextHandler = Telegraf.on('text', async ctx => {
 	ctx.scene.state.text = ctx.message.text
-
+	// console.log({ text: ctx.message.text })
 	// TODO Check text is valid and has no bad words
 	if (false) {
 	} else {
@@ -26,7 +25,7 @@ const advTextHandler = Telegraf.on('text', async ctx => {
 const usernameHandler = Telegraf.on('text', async ctx => {
 	ctx.session.text = ctx.scene.state.text
 	ctx.session.username = ctx.message.text
-
+	// console.log({ id: ctx.message.text })
 	if (
 		ctx.session.username.startsWith('@') &&
 		ctx.session.username.length <= 5

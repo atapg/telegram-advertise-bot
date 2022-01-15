@@ -35,8 +35,7 @@ const isUserChannelMember = async (ctx, next) => {
 		return await ctx.telegram
 			.getChatMember(process.env.CHANNEL_ID, id)
 			.then(async user => {
-				console.log(user)
-				// type: [member, left, creator, administrator]
+				// types: [member, left, creator, administrator]
 				if (user.status === 'left') {
 					return returnError(ctx, chat)
 				} else {
@@ -44,9 +43,7 @@ const isUserChannelMember = async (ctx, next) => {
 					return await next() //1052972017
 				}
 			})
-			.catch(err => {
-				console.log(err)
-				console.log('err user not found')
+			.catch(() => {
 				// user not found
 				return returnError(ctx, chat)
 			})
