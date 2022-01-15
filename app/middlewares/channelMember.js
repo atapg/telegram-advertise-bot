@@ -1,5 +1,20 @@
 const { youMustSubscribe } = require('../utils/texts')
 
+const returnError = (ctx, chat) => {
+	return ctx.telegram.sendMessage(chat, youMustSubscribe, {
+		reply_markup: {
+			inline_keyboard: [
+				[
+					{
+						text: 'عضویت در کانال ◀️',
+						url: `http://t.me/${process.env.CHANNEL_URLNOAT}`,
+					},
+				],
+			],
+		},
+	})
+}
+
 const isUserChannelMember = async (ctx, next) => {
 	let id
 	let chat
@@ -17,26 +32,23 @@ const isUserChannelMember = async (ctx, next) => {
 	}
 
 	if (chat) {
-		return ctx.telegram
+		return await ctx.telegram
 			.getChatMember(process.env.CHANNEL_ID, id)
-			.then(async () => {
-				// let user go
-				return await next()
+			.then(async user => {
+				console.log(user)
+				// type: [member, left, creator, administrator]
+				if (user.status === 'left') {
+					return returnError(ctx, chat)
+				} else {
+					// let user go
+					return await next() //1052972017
+				}
 			})
-			.catch(() => {
+			.catch(err => {
+				console.log(err)
+				console.log('err user not found')
 				// user not found
-				return ctx.telegram.sendMessage(chat, youMustSubscribe, {
-					reply_markup: {
-						inline_keyboard: [
-							[
-								{
-									text: 'عضویت در کانال ◀️',
-									url: `http://t.me/${process.env.CHANNEL_URLNOAT}`,
-								},
-							],
-						],
-					},
-				})
+				return returnError(ctx, chat)
 			})
 	} else {
 		return await next()
