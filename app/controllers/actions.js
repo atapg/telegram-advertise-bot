@@ -203,8 +203,8 @@ const presentAdv = async ctx => {
 		const channelAdv = `
 			🔸 ${adv.text}
 			
-			
-			📞 ${adv.username}                                   🔻 واگذار شد 🔺 
+			🔻 واگذار شد 🔺 
+			📞 ${adv.username}
 			-------------------------
 			🔰 ${process.env.CHANNEL_URL}
 		`
