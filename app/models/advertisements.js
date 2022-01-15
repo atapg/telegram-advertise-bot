@@ -21,6 +21,10 @@ const advSchema = mongoose.Schema({
 		type: Date,
 		default: new Date(),
 	},
+	hasTaken: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 module.exports = mongoose.model('advertisement', advSchema)

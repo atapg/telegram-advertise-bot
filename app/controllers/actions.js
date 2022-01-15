@@ -158,8 +158,11 @@ const showLastAdv = async ctx => {
 			🗒 نوشته آگهی:  ${lastAdv.text}
 			👤 تماس:${lastAdv.username}
 			📅 تاریخ:  ${new Date(lastAdv.date).toLocaleDateString('fa-IR')}
+			
+			🔻 واگذار ${lastAdv.hasTaken ? 'شده' : 'نشده'} 🔺
 		`
-	await ctx.telegram.sendMessage(ctx.message.chat.id, advText, {
+
+	const replyMarkup = {
 		reply_markup: {
 			inline_keyboard: [
 				[
@@ -170,12 +173,58 @@ const showLastAdv = async ctx => {
 				],
 			],
 		},
-	})
+	}
+
+	// set take button
+	if (!lastAdv.hasTaken) {
+		replyMarkup.reply_markup.inline_keyboard[0].push({
+			text: 'ثبت واگذار شدن آگهی ✅',
+			callback_data: `present_${lastAdv._id.toString()}`,
+		})
+	}
+
+	await ctx.telegram.sendMessage(ctx.message.chat.id, advText, replyMarkup)
 }
 
-const presentAdv = ctx => {
+const presentAdv = async ctx => {
 	const id = ctx.match.input.substring(8)
-	console.log(id)
+
+	const adv = await Advertisement.findById(id)
+
+	if (!adv) {
+		return ctx.reply('مشکلی بوجود آمده است و یا این آگهی وجود ندارد ❌')
+	}
+
+	adv.hasTaken = true
+
+	adv.save(async err => {
+		if (err) return ctx.reply('مشکلی بوجود آمده است ❌')
+
+		const channelAdv = `
+			🔸 ${adv.text}
+			
+			
+			📞 ${adv.username}                                   🔻 واگذار شد 🔺 
+			-------------------------
+			🔰 ${process.env.CHANNEL_URL}
+		`
+
+		ctx.telegram
+			.editMessageText(
+				process.env.CHANNEL_ID,
+				adv.message_id,
+				undefined,
+				channelAdv,
+			)
+			.then(() => {
+				return ctx.reply('آگهی با موفقیت به حالت واگذار شده تغییر یافت ✅')
+			})
+			.catch(() => {
+				return ctx.reply('مشکلی بوجود آمده است ❌')
+			})
+	})
+
+	ctx.deleteMessage()
 }
 
 module.exports = {
