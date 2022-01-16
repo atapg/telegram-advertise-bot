@@ -4,20 +4,25 @@ const {
 } = require('telegraf')
 
 const { advSceneKeyboard } = require('../utils/keyboards')
-const { addAdvText, exampleAdvText } = require('../utils/texts')
+const { addAdvText, exampleAdvText, badText } = require('../utils/texts')
+const { filterText } = require('../utils/filters')
 
 const advTextHandler = Telegraf.on('text', async ctx => {
 	ctx.scene.state.text = ctx.message.text
 	// console.log({ text: ctx.message.text })
 	// TODO Check text is valid and has no bad words
-	if (false) {
+
+	const isTextOk = filterText(ctx.message.text)
+
+	if (!isTextOk.ok) {
+		ctx.reply(badText)
 	} else {
 		await ctx.reply(`
 		🔸 نوشته آگهی:
-		
+
 		🔹 ${ctx.message.text} 🔹
-		
- 🔸		لطفا آی دی یا شماره تلفن جهت درج در آگهی را وارد نمایید و یا درغیر اینصورت گزینه بازگشت را کلیک کنید
+
+	🔸		لطفا آی دی یا شماره تلفن جهت درج در آگهی را وارد نمایید و یا درغیر اینصورت گزینه بازگشت را کلیک کنید
 		`)
 
 		return ctx.wizard.next()
