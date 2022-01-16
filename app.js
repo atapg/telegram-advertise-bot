@@ -74,7 +74,6 @@ bot.command('/start', async ctx => {
 	if (regUser) {
 		//new User
 		if (ctx.update.message.text !== '/start') {
-			console.log('Here')
 			const invId = parseInt(ctx.update.message.text.substring(7))
 
 			if (invId !== ctx.update.message.from.id) {
@@ -82,7 +81,13 @@ bot.command('/start', async ctx => {
 			}
 		}
 
-		return ctx.replyWithHTML(newUserWelcomeText, mainKeyboard.reply())
+		return ctx.replyWithHTML(
+			newUserWelcomeText +
+				`\n 🌐 لینک دعوت شما:
+			 t.me/${process.env.BOT_URLNOAT}?start=${ctx.update.message.from.id}
+			`,
+			mainKeyboard.reply(),
+		)
 	}
 })
 

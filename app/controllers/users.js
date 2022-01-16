@@ -35,16 +35,23 @@ const setInvId = async (ctx, id, invId) => {
 	if (hasAlreadyInvited) {
 		return ctx.reply('شما قبلا با این کد دعوت ثبت نام کرده اید ❌')
 	} else {
-		user.invitedUsers.push(invId)
+		user.invitedUsers.push(id)
 		user.balance = user.balance + 5
 
 		//send ok to invId user
-		ctx.telegram.sendMessage(
-			user.chatId,
-			`لینک دعوت شما مورد استفاده قرار گرفت و 5 سکه به صندوق شما اضافه شد ✅`,
-		)
+		if (user.chatId) {
+			ctx.telegram.sendMessage(
+				user.chatId,
+				`لینک دعوت شما مورد استفاده قرار گرفت و 5 سکه به صندوق شما اضافه شد ✅`,
+			)
+		}
 
-		user.save()
+		user.save((err, result) => {
+			console.log({
+				err,
+				result,
+			})
+		})
 	}
 }
 
@@ -52,3 +59,5 @@ module.exports = {
 	registerUser,
 	setInvId,
 }
+
+//09334764397
