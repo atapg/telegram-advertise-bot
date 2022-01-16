@@ -4,11 +4,7 @@ const {
 } = require('telegraf')
 
 const { advSceneKeyboard } = require('../utils/keyboards')
-const {
-	addAdvText,
-	exampleAdvText,
-	addUsernameText,
-} = require('../utils/texts')
+const { addAdvText, exampleAdvText } = require('../utils/texts')
 
 const advTextHandler = Telegraf.on('text', async ctx => {
 	ctx.scene.state.text = ctx.message.text
@@ -16,7 +12,13 @@ const advTextHandler = Telegraf.on('text', async ctx => {
 	// TODO Check text is valid and has no bad words
 	if (false) {
 	} else {
-		await ctx.replyWithHTML(addUsernameText)
+		await ctx.reply(`
+		🔸 نوشته آگهی:
+		
+		🔹 ${ctx.message.text} 🔹
+		
+ 🔸		لطفا آی دی یا شماره تلفن جهت درج در آگهی را وارد نمایید و یا درغیر اینصورت گزینه بازگشت را کلیک کنید
+		`)
 
 		return ctx.wizard.next()
 	}
@@ -26,10 +28,7 @@ const usernameHandler = Telegraf.on('text', async ctx => {
 	ctx.session.text = ctx.scene.state.text
 	ctx.session.username = ctx.message.text
 	// console.log({ id: ctx.message.text })
-	if (
-		ctx.session.username.startsWith('@') &&
-		ctx.session.username.length <= 5
-	) {
+	if (!ctx.message.text.startsWith('@') || ctx.message.text.length <= 5) {
 		ctx.reply('نام کاربری وارد شده مجاز نمیباشد ❌')
 	} else {
 		const channelAdv = `
