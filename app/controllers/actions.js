@@ -55,7 +55,12 @@ const sendAdv = async ctx => {
 			telegram_id: ctx.update.callback_query.from.id,
 		})
 
-		const channelAdv = `
+		user.balance = user.balance - coinPerAdv
+		user.save(async (err, result) => {
+			if (err)
+				return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید ❌')
+			else {
+				const channelAdv = `
 		🔸 ${createdAdv.text}
 		
 		
@@ -64,26 +69,23 @@ const sendAdv = async ctx => {
 		🔰 ${process.env.CHANNEL_URL}
 	`
 
-		// Send message to channel
-		const result = await ctx.telegram.sendMessage(
-			process.env.CHANNEL_ID,
-			channelAdv,
-		)
+				// Send message to channel
+				const result = await ctx.telegram.sendMessage(
+					process.env.CHANNEL_ID,
+					channelAdv,
+				)
 
-		createdAdv.message_id = result.message_id
-		await createdAdv.save(err => {
-			if (err) {
-				return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید ❌')
+				createdAdv.message_id = result.message_id
+				await createdAdv.save(err => {
+					if (err) {
+						return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید ❌')
+					}
+				})
+
+				ctx.reply(
+					'آگهی با موفقیت ثبت شد ✅ \n 🔴درصورتی که قوانین را رعایت نکرده باشید آگهی از کانال حذف خواهد شد🔴',
+				)
 			}
-		})
-
-		ctx.reply(
-			'آگهی با موفقیت ثبت شد ✅ \n 🔴درصورتی که قوانین را رعایت نکرده باشید آگهی از کانال حذف خواهد شد🔴',
-		)
-
-		user.balance = user.balance - coinPerAdv
-		user.save((err, result) => {
-			console.log({ err, result })
 		})
 	} else {
 		return ctx.reply('شما سکه ی کافی برای درج آگهی را ندارید ❌')
