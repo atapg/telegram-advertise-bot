@@ -1,5 +1,5 @@
 const User = require('../models/users')
-const { coinPerAdv } = require('../utils/constants')
+const { startingCoin, coinPerInv } = require('../utils/constants')
 
 const registerUser = async (info, chatId) => {
 	const { username, id, first_name } = info.from
@@ -14,7 +14,7 @@ const registerUser = async (info, chatId) => {
 		name: first_name,
 		telegram_id: id,
 		username,
-		balance: coinPerAdv,
+		balance: startingCoin,
 		chatId: chatId,
 	})
 }
@@ -36,21 +36,17 @@ const setInvId = async (ctx, id, invId) => {
 		return ctx.reply('شما قبلا با این کد دعوت ثبت نام کرده اید ❌')
 	} else {
 		user.invitedUsers.push(id)
-		user.balance = user.balance + 5
+		user.balance = user.balance + coinPerInv
 
 		//send ok to invId user
 		if (user.chatId) {
 			ctx.telegram.sendMessage(
 				user.chatId,
-				`لینک دعوت شما مورد استفاده قرار گرفت و 5 سکه به صندوق شما اضافه شد ✅`,
+				`لینک دعوت شما مورد استفاده قرار گرفت و ${coinPerInv} سکه به صندوق شما اضافه شد ✅`,
 			)
 		}
 
-		user.save((err, result) => {
-			if (err) {
-				return ctx.reply('مشکلی بوجود آمده است ❌')
-			}
-		})
+		user.save()
 	}
 }
 

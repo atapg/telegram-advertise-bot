@@ -1,7 +1,7 @@
 const { filterText } = require('../utils/filters')
 const Advertisement = require('../models/advertisements')
 const User = require('../models/users')
-const { coinPerAdv } = require('../utils/constants')
+const { coinPerAdv, coinPerInv } = require('../utils/constants')
 
 const enterAdvScene = ctx => ctx.scene.enter('addAdvScene')
 
@@ -261,7 +261,7 @@ const showMyBalance = async ctx => {
 	
 💰 ${user.balance} سکه میباشد
 
-🔹 برای گرفتن سکه های بیشتر می توانید با لینک دعوت خود دیگران را دعوت کنید و به ازای هر نفر 5 سکه بگیرید
+🔹 برای گرفتن سکه های بیشتر می توانید با لینک دعوت خود دیگران را دعوت کنید و به ازای هر نفر ${coinPerInv} سکه بگیرید
 
 🌐 لینک دعوت شما:
  t.me/${process.env.BOT_URLNOAT}?start=${id}
@@ -270,7 +270,7 @@ const showMyBalance = async ctx => {
 
 const showMyInvLink = ctx => {
 	return ctx.reply(`
-	🔴 به ازای ثبت نام هر کاربر با این لینک 5 سکه به صندوق شما اضافه می شود
+	🔴 به ازای ثبت نام هر کاربر با این لینک ${coinPerInv} سکه به صندوق شما اضافه می شود
 	
 	🌐 لینک دعوت شما:
 	

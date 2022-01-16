@@ -73,17 +73,6 @@ bot.command('/start', async ctx => {
 		ctx.update.message.chat.id,
 	)
 
-	if (ctx.update.message.text !== '/start') {
-		const invId = parseInt(ctx.update.message.text.substring(7))
-
-		if (invId !== ctx.update.message.from.id) {
-			await ctx.replyWithHTML(
-				'شما قبلا در این بات ثبت نام کرده اید و نمی توانید با لینک دعوت دوباره ثبت نام کنید ❌',
-				mainKeyboard.reply(),
-			)
-		}
-	}
-
 	if (regUser) {
 		//new User
 		if (ctx.update.message.text !== '/start') {
@@ -101,6 +90,17 @@ bot.command('/start', async ctx => {
 			`,
 			mainKeyboard.reply(),
 		)
+	} else {
+		if (ctx.update.message.text !== '/start') {
+			const invId = parseInt(ctx.update.message.text.substring(7))
+
+			if (invId !== ctx.update.message.from.id) {
+				await ctx.replyWithHTML(
+					'شما قبلا در این بات ثبت نام کرده اید و نمی توانید با لینک دعوت دوباره ثبت نام کنید ❌',
+					mainKeyboard.reply(),
+				)
+			}
+		}
 	}
 })
 
