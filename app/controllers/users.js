@@ -47,10 +47,9 @@ const setInvId = async (ctx, id, invId) => {
 		}
 
 		user.save((err, result) => {
-			console.log({
-				err,
-				result,
-			})
+			if (err) {
+				return ctx.reply('مشکلی بوجود آمده است ❌')
+			}
 		})
 	}
 }
@@ -59,5 +58,3 @@ module.exports = {
 	registerUser,
 	setInvId,
 }
-
-//09334764397

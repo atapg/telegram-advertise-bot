@@ -6,11 +6,13 @@ const {
 	returnFromAdvsScene,
 	lastAdv,
 	myBalance,
+	myInvLink,
 } = require('./constants')
 
 const mainKeyboard = Keyboard.make([
-	[lastAdv, addAdv], // First row
+	[lastAdv, addAdv],
 	[manageAdvs, myBalance],
+	[myInvLink],
 ])
 
 advSceneKeyboard = Keyboard.make([[returnFromAdvsScene]])

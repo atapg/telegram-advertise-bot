@@ -6,6 +6,7 @@ const manageAdvs = 'تمام آگهی های قبلی من 🗄'
 const returnFromAdvsScene = 'بازگشت ⬅️'
 const lastAdv = 'آخرین آگهی من 📋'
 const myBalance = 'موجودی سکه های من 💰'
+const myInvLink = 'لینک دعوت من 🌐'
 
 const coinPerAdv = 10
 
@@ -19,4 +20,5 @@ module.exports = {
 	lastAdv,
 	myBalance,
 	coinPerAdv,
+	myInvLink,
 }

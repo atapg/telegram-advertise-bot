@@ -249,6 +249,15 @@ const showMyBalance = async ctx => {
 	`)
 }
 
+const showMyInvLink = ctx => {
+	return ctx.reply(`
+	🔴 به ازای ثبت نام هر کاربر با این لینک 5 سکه به صندوق شما اضافه می شود
+	
+	🌐 لینک دعوت شما:
+	
+	t.me/${process.env.BOT_URLNOAT}?start=${ctx.update.message.from.id}`)
+}
+
 module.exports = {
 	enterAdvScene,
 	sendAdv,
@@ -258,4 +267,5 @@ module.exports = {
 	showLastAdv,
 	presentAdv,
 	showMyBalance,
+	showMyInvLink,
 }
