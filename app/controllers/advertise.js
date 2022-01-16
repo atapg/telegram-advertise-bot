@@ -29,7 +29,7 @@ const usernameHandler = Telegraf.on('text', async ctx => {
 	ctx.session.username = ctx.message.text
 	// console.log({ id: ctx.message.text })
 	if (!ctx.message.text.startsWith('@') || ctx.message.text.length <= 5) {
-		ctx.reply('نام کاربری وارد شده مجاز نمیباشد ❌')
+		ctx.reply('آی دی یا شماره تلفن وارد شده مجاز نمیباشد ❌')
 	} else {
 		const channelAdv = `
 			🔸 ${ctx.session.text}
