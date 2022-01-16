@@ -1,5 +1,6 @@
 const { filterText } = require('../utils/filters')
 const Advertisement = require('../models/advertisements')
+const User = require('../models/users')
 
 const enterAdvScene = ctx => ctx.scene.enter('addAdvScene')
 
@@ -63,7 +64,7 @@ const sendAdv = async ctx => {
 	createdAdv.message_id = result.message_id
 	await createdAdv.save(err => {
 		if (err) {
-			return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید')
+			return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید ❌')
 		}
 	})
 
@@ -229,6 +230,25 @@ const presentAdv = async ctx => {
 	ctx.deleteMessage()
 }
 
+const showMyBalance = async ctx => {
+	const id = ctx.update.message.from.id
+
+	const user = await User.findOne({ telegram_id: id })
+
+	if (!user) return ctx.reply('مشکلی بوجود آمده است ❌')
+
+	return ctx.reply(`
+	🔸 کاربر گرامی با آیدی ${id} موجودی سکه های شما:
+	
+💰 ${user.balance} سکه میباشد
+
+🔹 برای گرفتن سکه های بیشتر می توانید با لینک دعوت خود دیگران را دعوت کنید و به ازای هر نفر 5 سکه بگیرید
+
+🌐 لینک دعوت شما:
+ t.me/${process.env.BOT_URLNOAT}?start=${id}
+	`)
+}
+
 module.exports = {
 	enterAdvScene,
 	sendAdv,
@@ -237,4 +257,5 @@ module.exports = {
 	deleteAdv,
 	showLastAdv,
 	presentAdv,
+	showMyBalance,
 }

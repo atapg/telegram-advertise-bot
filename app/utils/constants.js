@@ -5,6 +5,9 @@ const addAdv = 'ثبت آگهی 📝'
 const manageAdvs = 'تمام آگهی های قبلی من 🗄'
 const returnFromAdvsScene = 'بازگشت ⬅️'
 const lastAdv = 'آخرین آگهی من 📋'
+const myBalance = 'موجودی سکه های من 💰'
+
+const coinPerAdv = 10
 
 module.exports = {
 	addAdv,
@@ -14,4 +17,6 @@ module.exports = {
 	botName,
 	channelId,
 	lastAdv,
+	myBalance,
+	coinPerAdv,
 }

@@ -1,4 +1,4 @@
-const { botName, channelId } = require('./constants')
+const { botName, channelId, coinPerAdv } = require('./constants')
 
 const welcomeText = `
 	🔥 <b>به ${botName} خوش آمدید</b>🔥
@@ -57,10 +57,19 @@ const youMustSubscribe = `
  ${channelId}
 `
 
+const newUserWelcomeText = `
+	🔴 شما اولین بار است که از خدمات ما استفاده می کنید 🔴
+	
+	🔹 برای کسایی که اولین بار از خدمات ما استفاده می کنند ${coinPerAdv} سکه به موجودی های آنان اضافه می شود
+	
+	🔸 شما می توانید با دعوت دوستان خود به ازای هر نفر 5 سکه بگیرید و با استفاده از آن سکه ها آگهی های خود را داخل کانال بگذارید
+`
+
 module.exports = {
 	addAdvText,
 	exampleAdvText,
 	addUsernameText,
 	welcomeText,
 	youMustSubscribe,
+	newUserWelcomeText,
 }

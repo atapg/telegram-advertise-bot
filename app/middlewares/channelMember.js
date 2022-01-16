@@ -9,13 +9,17 @@ const returnError = (ctx, chat) => {
 						text: 'عضویت در کانال ◀️',
 						url: `http://t.me/${process.env.CHANNEL_URLNOAT}`,
 					},
+					{
+						text: 'عضو شدم ✅',
+						callback_data: `checkMember`,
+					},
 				],
 			],
 		},
 	})
 }
 
-const isUserChannelMember = async (ctx, next) => {
+const isUserChannelMember = async (ctx, next, hasReturn) => {
 	let id
 	let chat
 
@@ -40,7 +44,13 @@ const isUserChannelMember = async (ctx, next) => {
 					return returnError(ctx, chat)
 				} else {
 					// let user go
-					return await next() //1052972017
+					await next() //1052972017
+					if (hasReturn) {
+						return ctx.telegram.sendMessage(
+							chat,
+							'شما با موفقیت در کانال ها عضو شده اید حالا میتوانید از خدمات ما استفاده کنید ✅',
+						)
+					}
 				}
 			})
 			.catch(() => {
