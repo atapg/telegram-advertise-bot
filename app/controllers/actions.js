@@ -108,7 +108,8 @@ const showPrevAdvs = async ctx => {
 				👤 تماس:${allAdvs[i].username}
 				📅 تاریخ:  ${new Date(allAdvs[i].date).toLocaleDateString('fa-IR')}
 			`
-			await ctx.telegram.sendMessage(ctx.message.chat.id, advText, {
+
+			const replyMarkup = {
 				reply_markup: {
 					inline_keyboard: [
 						[
@@ -119,7 +120,16 @@ const showPrevAdvs = async ctx => {
 						],
 					],
 				},
-			})
+			}
+
+			if (!allAdvs[i].hasTaken) {
+				replyMarkup.reply_markup.inline_keyboard[0].push({
+					text: 'ثبت واگذار شدن آگهی ✅',
+					callback_data: `present_${allAdvs[i]._id.toString()}`,
+				})
+			}
+
+			await ctx.telegram.sendMessage(ctx.message.chat.id, advText, replyMarkup)
 		}
 	} else {
 		//no advz

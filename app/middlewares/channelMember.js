@@ -53,7 +53,8 @@ const isUserChannelMember = async (ctx, next, hasReturn) => {
 					}
 				}
 			})
-			.catch(() => {
+			.catch(err => {
+				// console.log(err)
 				// user not found
 				return returnError(ctx, chat)
 			})
