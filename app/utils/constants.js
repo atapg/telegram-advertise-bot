@@ -1,6 +1,6 @@
-const botName = 'بات آگهی تستی'
-const botId = '@test_kelt_bot'
-const channelId = '@test_kelt'
+const botName = 'بات تاپ پروژه'
+const botId = process.env.BOT_URL
+const channelId = process.env.CHANNEL_URL
 const addAdv = 'ثبت آگهی 📝'
 const manageAdvs = 'آگهی های قبلی من 🗄'
 const returnFromAdvsScene = 'بازگشت ⬅️'

@@ -1,5 +1,7 @@
 const { youMustSubscribe } = require('../utils/texts')
 
+// Don't Remember to add bot to your channel as admin!!!
+
 const returnError = (ctx, chat) => {
 	return ctx.telegram.sendMessage(chat, youMustSubscribe, {
 		reply_markup: {
@@ -54,7 +56,6 @@ const isUserChannelMember = async (ctx, next, hasReturn) => {
 				}
 			})
 			.catch(err => {
-				// console.log(err)
 				// user not found
 				return returnError(ctx, chat)
 			})
