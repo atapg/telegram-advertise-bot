@@ -9,7 +9,7 @@ const myBalance = 'موجودی سکه های من 💰'
 const myInvLink = 'لینک دعوت من 🌐'
 
 const coinPerAdv = 10
-const startingCoin = 30
+const startingCoin = 10
 const coinPerInv = 5
 
 module.exports = {
