@@ -10,13 +10,28 @@ const registerUser = async (info, chatId) => {
 		return null
 	}
 
-	return await User.create({
-		name: first_name,
-		telegram_id: id,
-		username,
-		balance: startingCoin,
-		chatId: chatId,
-	})
+	try {
+		const user = new User()
+		user.name = first_name
+		user.telegram_id = id
+
+		if (username) {
+			user.username = username
+		} else {
+			user.username = id
+		}
+
+		user.balance = startingCoin
+		user.chatId = chatId
+
+		user.save().then(() => {
+			return user
+		})
+
+		return user
+	} catch (e) {
+		return ctx.reply('مشکلی در ثبت نام شما و جود آمده است ❌')
+	}
 }
 
 const findDuplicate = async id => {

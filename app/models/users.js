@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
 	},
 	username: {
 		type: String,
-		unique: true,
+		unique: false,
 	},
 	balance: {
 		type: Number,
