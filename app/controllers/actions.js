@@ -61,13 +61,13 @@ const sendAdv = async ctx => {
 				return ctx.reply('مشکلی بوجود آمده است لطفا مجددا امتحان نمایید ❌')
 			else {
 				const channelAdv = `
-		🔸 ${createdAdv.text}
-		
-		
-		📞 ${createdAdv.username}
-		-------------------------
-		🔰 ${process.env.CHANNEL_URL}
-	`
+					🔸 ${createdAdv.text}
+					
+					
+					📞 ${createdAdv.username}
+					-------------------------------------
+					🔰 ${process.env.CHANNEL_URL}
+				`
 
 				// Send message to channel
 				const result = await ctx.telegram.sendMessage(
